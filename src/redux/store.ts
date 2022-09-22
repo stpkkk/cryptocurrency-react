@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import chartReducer from "./chartsSlice";
+// import chartReducer from "./chartsSlice";
+import { cryptoApi } from "../services/cryptoApi";
 
 const store = configureStore({
   reducer: {
-    charts: chartReducer,
+    [cryptoApi.reducerPath]: cryptoApi.reducer,
   },
 });
 
