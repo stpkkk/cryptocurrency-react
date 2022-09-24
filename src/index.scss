@@ -1,25 +1,19 @@
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-body {
-  margin: 0px;
-  background-color: #212529;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 .wrapper {
-  max-width: 1200px;
+  max-width: 900px;
   margin: 0 auto;
   color: #faebd7;
 }
 
 .header {
   background-color: #5a44aa;
-  height: 60px;
+  height: 70px;
 }
 
 .header-icon {
@@ -40,9 +34,9 @@ body {
 .appTitle a:hover,
 .header-icon:hover,
 h1:hover {
-  color: #3c6da5;
+	color:  hsl(308, 100%, 55%);
+	transition: color 0.3s;
+
 }
 
-.chart {
-  margin: 0;
-}
+

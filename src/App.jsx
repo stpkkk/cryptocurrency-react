@@ -9,8 +9,9 @@ import CryptoDetails from "./pages/CryptoDetails";
 import News from "./pages/News";
 import Navbar from "./components/Navbar/Navbar";
 
-const App: React.FC = () => {
-  const [sidebar, setSidebar] = useState<boolean>(false);
+
+const App = () => {
+  const [sidebar, setSidebar] = useState(false);
 
   const showSidebar = () => {
     setSidebar(!sidebar);
@@ -24,7 +25,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/exchanges" element={<Exchanges />} />
-          <Route path="/cryptocurrencies" element={<Cryptocurrencies  />} />
+          <Route path="/cryptocurrencies" element={<Cryptocurrencies />} />
           <Route path="/cryptodetails" element={<CryptoDetails />} />
           <Route path="/news" element={<News />} />
           <Route path="/about" element={<About />} />

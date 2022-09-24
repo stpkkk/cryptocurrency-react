@@ -10,7 +10,7 @@ const About: React.FC = () => {
         Cryptovalery by Stepanov Igor
       </p>
       <div className="text-center ">
-        <FaReact size={150} />
+        <FaReact size={150} color="#ff42e0 "/>
       </div>
     </div>
   );
