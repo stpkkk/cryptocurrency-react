@@ -1,13 +1,11 @@
-import { configureStore } from "@reduxjs/toolkit";
-// import chartReducer from "./chartsSlice";
-import { cryptoApi } from "../services/cryptoApi";
+import { configureStore } from '@reduxjs/toolkit';
 
-const store = configureStore({
+import { cryptoApi } from '../services/cryptoApi';
+import { cryptoNewsApi } from '../services/cryptoNewsApi';
+
+export default configureStore({
   reducer: {
     [cryptoApi.reducerPath]: cryptoApi.reducer,
+    [cryptoNewsApi.reducerPath]: cryptoNewsApi.reducer,
   },
 });
-
-export default store;
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;

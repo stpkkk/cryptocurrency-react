@@ -187,6 +187,8 @@ figure {
 img {
   vertical-align: middle;
   border-style: none;
+  max-height: 100px;
+  border-radius: 5px;
 }
 a,
 area,
@@ -4262,15 +4264,16 @@ a.ant-btn-sm {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  color: rgba(0, 0, 0, 0.85);
+  color:#f0f0f0;
   font-size: 14px;
   font-variant: tabular-nums;
+  font-weight: 500;
   line-height: 1.5715;
   list-style: none;
   font-feature-settings: 'tnum';
   position: relative;
-  background: #fff;
-  border-radius: 5px;
+  background-color: #5a44aa;
+  border-radius: 10px;
 }
 .ant-card-rtl {
   direction: rtl;
@@ -4284,14 +4287,14 @@ a.ant-btn-sm {
   box-shadow: 0 1px 2px -2px rgba(0, 0, 0, 0.16), 0 3px 6px 0 rgba(0, 0, 0, 0.12), 0 5px 12px 4px rgba(0, 0, 0, 0.09);
 }
 .ant-card-bordered {
-  border: 1px solid #f0f0f0;
+  border: 1px solid #f0f0f005;
 }
 .ant-card-head {
   min-height: 48px;
   margin-bottom: -1px;
   padding: 0 24px;
-  color: rgba(0, 0, 0, 0.85);
-  font-weight: 500;
+  color: #f0f0f0;
+  font-weight: 700;
   font-size: 16px;
   background: transparent;
   border-bottom: 1px solid #f0f0f0;
@@ -8232,6 +8235,7 @@ _:-ms-fullscreen .ant-picker-range-wrapper .ant-picker-year-panel .ant-picker-ce
   display: flex;
   flex-flow: row wrap;
   min-width: 0;
+  margin-right: 0;
 }
 .ant-row::before,
 .ant-row::after {
@@ -20708,7 +20712,8 @@ span.ant-radio + * {
   display: block;
   width: 9px;
   height: 9px;
-  background-color: purple;
+  background-color: hsl(308, 100%, 55%);
+
   border-radius: 100%;
   transform: scale(0.75);
   transform-origin: 50% 50%;
@@ -25272,7 +25277,7 @@ div.ant-typography-h4,
 div.ant-typography-h4 > textarea,
 .ant-typography h4 {
   margin-bottom: 0.5em;
-  color: rgba(0, 0, 0, 0.85);
+  color: #faebd7;
   font-weight: 600;
   font-size: 20px;
   line-height: 1.4;

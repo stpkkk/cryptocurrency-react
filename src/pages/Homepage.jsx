@@ -1,21 +1,21 @@
 import React from "react";
 import millify from "millify"; //round numbers
 import { Link } from "react-router-dom";
-import { Typography, Row, Col, Statistic, Spin } from "antd";
+import { Typography, Row, Col, Statistic } from "antd";
 import Cryptocurrencies from "./Cryptocurrencies";
 import News from "./News";
 import { useGetCryptosQuery } from "../services/cryptoApi";
+import Loader from "../components/Loader";
 
 const { Title } = Typography;
 
 const Homepage = () => {
-  const { data, isFetching } = useGetCryptosQuery();
-  //   const { data } = useGetCryptosQuery();
+  const { data, isFetching } = useGetCryptosQuery(10);
   const globalStats = data?.data?.stats;
 
-  if (isFetching) return <Spin size="large" />;
+  if (isFetching) return <Loader/>
 
-  console.log(data);
+//   console.log(data);
   return (
     <>
       <div align="middle">
@@ -63,7 +63,7 @@ const Homepage = () => {
           <Link to="/cryptocurrencies">Show more</Link>
         </Title>
       </div>
-      <Cryptocurrencies />
+      <Cryptocurrencies  simplified={true}/>
       <div className="home-heading-container">
         <Title level={2} className="home-title">
           Latest Crypto News:
@@ -72,7 +72,7 @@ const Homepage = () => {
           <Link to="/news">Show more</Link>
         </Title>
       </div>
-      <News />
+      <News simplified={true}/>
     </>
   );
 };
