@@ -1,3 +1,5 @@
+//TODO add some stuff from data
+//TODO styles
 import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Homepage from "./pages/Homepage";
@@ -26,7 +28,7 @@ const App = () => {
           <Route path="/" element={<Homepage />} />
           <Route path="/exchanges" element={<Exchanges />} />
           <Route path="/cryptocurrencies" element={<Cryptocurrencies />} />
-          <Route path="/cryptodetails" element={<CryptoDetails />} />
+          <Route exact path="/crypto/:coinId" element={<CryptoDetails />} />
           <Route path="/news" element={<News />} />
           <Route path="/about" element={<About />} />
         </Routes>
