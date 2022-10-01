@@ -1,4 +1,5 @@
 //API options, API we connect in store in reducer
+//https://rapidapi.com/Coinranking/api/coinranking1/
 
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"; //!exact path
 
@@ -12,7 +13,7 @@ const baseUrl = "https://coinranking1.p.rapidapi.com";
 
 const createRequest = (url: string) => ({ url, headers: cryptoApiHeaders });
 
-export const cryptoApi = createApi({
+export const coinRankingApi = createApi({
   reducerPath: "cryptoApi",
   baseQuery: fetchBaseQuery({ baseUrl }),
   endpoints: (builder) => ({
@@ -42,4 +43,4 @@ export const {
   useGetCryptoDetailsQuery,
   //   useGetExchangesQuery,
   useGetCryptoHistoryQuery,
-} = cryptoApi;
+} = coinRankingApi;

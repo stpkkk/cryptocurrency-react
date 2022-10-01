@@ -61,7 +61,7 @@ const LineChart = ({ coinHistory, currentPrice, coinName }) => {
 
   const options = { scales: { y: { ticks: { beginAtZero: true } } } };
 
-  console.log(coinHistory);
+//   console.log(coinHistory);
 
   return (
     <>

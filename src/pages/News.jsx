@@ -3,7 +3,7 @@ import { Select, Typography, Row, Col, Avatar, Card } from "antd";
 import moment from "moment";
 
 import { useGetNewsQuery } from "../services/cryptoNewsApi";
-import { useGetCryptosQuery } from "../services/cryptoApi";
+import { useGetCryptosQuery } from "../services/coinRankingApi";
 import Loader from "../components/Loader";
 
 const demoImage =
@@ -22,7 +22,7 @@ const News = ({ simplified }) => {
 
   if (!cryptoNews?.value) return <Loader />;
 
-  console.log(cryptoNews);
+//   console.log(cryptoNews);
 
   return (
     <Row gutter={[24, 24]}>

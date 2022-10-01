@@ -18,7 +18,7 @@ import {
 import {
   useGetCryptoDetailsQuery,
   useGetCryptoHistoryQuery,
-} from "../services/cryptoApi";
+} from "../services/coinRankingApi";
 import Loader from "../components/LineChart";
 import LineChart from "../components/LineChart";
 
@@ -105,7 +105,7 @@ const CryptoDetails = () => {
     },
   ];
 
-  //   console.log(coinHistory);
+    // console.log(data);
 
   return (
     <Col className="coin-detail-container">
