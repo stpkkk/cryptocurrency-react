@@ -9,7 +9,6 @@ export const coingeckoApi = createApi({
   reducerPath: "coingeckoApi",
   baseQuery: fetchBaseQuery({ baseUrl }),
   endpoints: (builder) => ({
-
     // getCryptos: builder.query({
     //   query: (count) => `/coins?limit=${count}`,
     // }),
@@ -19,11 +18,10 @@ export const coingeckoApi = createApi({
     // }),
 
     getChartData: builder.query({
-      query: ({ timeperiod, id}) => `/coins/${id}/market_chart?vs_currency=usd&days=${timeperiod}'`,
+      query: ({ id, days }) =>
+        `/coins/${id}/market_chart?vs_currency=usd&days=${days}'`,
     }),
   }),
 });
 
-export const {
-    useGetChartDataQuery,
-} = coingeckoApi;
+export const { useGetChartDataQuery } = coingeckoApi;

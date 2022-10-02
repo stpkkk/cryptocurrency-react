@@ -1,8 +1,10 @@
+//TODO https://youtu.be/QA6oTpMZp84?t=5669 USE EFFECT !!
+
 import React, { useState } from "react";
 import HTMLReactParser from "html-react-parser";
 import { useParams } from "react-router-dom";
 import millify from "millify";
-import { Col, Row, Typography, Select } from "antd";
+import { Col, Image, Row, Typography } from "antd";
 import {
   MoneyCollectOutlined,
   DollarCircleOutlined,
@@ -23,30 +25,24 @@ import Loader from "../components/LineChart";
 import LineChart from "../components/LineChart";
 
 const { Title, Text } = Typography;
-const { Option } = Select;
 
 const CryptoDetails = () => {
   const { id } = useParams();
   const { coinId } = useParams();
-  const [timeperiod, setTimeperiod] = useState("7d");
+  const [days, setDays] = useState(1);
   const { data, isFetching } = useGetCryptoDetailsQuery(coinId);
   const { data: coinHistory } = useGetCryptoHistoryQuery({
     coinId,
-    timeperiod,
+    days,
   });
   const cryptoDetails = data?.data?.coin;
 
   if (isFetching) return <Loader />;
 
-  const time = ["24h", "7d", "1y"];
-  // const time = ["3h", "24h", "7d", "30d", "1y", "3m", "3y", "5y"];
-
-  
-
   const stats = [
     {
       title: "Price to USD",
-      value: `$ ${cryptoDetails?.price && millify(cryptoDetails?.price)}`,
+      value: `$ ${cryptoDetails?.price && cryptoDetails?.price}`,
       icon: <DollarCircleOutlined />,
     },
     { title: "Rank", value: cryptoDetails?.rank, icon: <NumberOutlined /> },
@@ -54,7 +50,7 @@ const CryptoDetails = () => {
       title: "24h Volume",
       value: `$ ${cryptoDetails?.volume && millify(cryptoDetails?.volume)}`,
       icon: <ThunderboltOutlined />,
-    },
+    }, //! volume starts from number
     {
       title: "Market Cap",
       value: `$ ${
@@ -109,9 +105,11 @@ const CryptoDetails = () => {
     },
   ];
 
+  console.log(cryptoDetails?.iconUrl);
   return (
     <Col className="coin-detail-container">
-      {/* <Col className="coin-heading-container">
+      <Col className="coin-heading-container">
+        <Image src={cryptoDetails?.iconUrl} />
         <Title level={2} className="coin-name">
           {data?.data?.coin.name} ({data?.data?.coin.symbol}) Price
         </Title>
@@ -119,22 +117,13 @@ const CryptoDetails = () => {
           {cryptoDetails.name} live price in US Dollar (USD). View value
           statistics, market cap and supply.
         </p>
-      </Col> */}
-      <Select
-        defaultValue="7d"
-        className="select-timeperiod"
-        placeholder="Select Timeperiod"
-        onChange={(value) => setTimeperiod(value)}
-      >
-        {time.map((date, index) => (
-          <Option key={index}>{date}</Option>
-        ))}
-      </Select>
+      </Col>
       <LineChart
         coinHistory={coinHistory}
         currentPrice={cryptoDetails?.price} //TODO milify
         coinName={cryptoDetails?.name}
-        timeperiod={timeperiod}
+        days={days}
+        setDays={setDays}
         id={id}
       />
       <Col className="stats-container">
@@ -193,7 +182,7 @@ const CryptoDetails = () => {
           {cryptoDetails.links?.map((link, index) => (
             <Row className="coin-link" key={index}>
               <Title level={5} className="link-name">
-                {link.type}
+                {link.type}:{" "}
               </Title>
               <a href={link.url} target="_blank" rel="noreferrer">
                 {link.name}

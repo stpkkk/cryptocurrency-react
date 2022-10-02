@@ -1,6 +1,6 @@
 //TODO add some stuff from data
 //TODO styles
-//TODO 
+//TODO Loader
 import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Homepage from "./pages/Homepage";

@@ -1,7 +1,8 @@
 import React from "react";
 
-import { Col, Row, Typography } from "antd";
+import { Button, Col, Row, Typography } from "antd";
 import { useGetChartDataQuery } from "../services/coingeckoApi";
+import { timePeriod } from "../data/timePeriod";
 
 import {
   Chart as ChartJS,
@@ -14,7 +15,7 @@ import {
   Tooltip,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import moment from "moment";
+import { millify } from "millify";
 
 ChartJS.register(
   LinearScale,
@@ -28,45 +29,40 @@ ChartJS.register(
 
 const { Title } = Typography;
 
-const LineChart = ({ coinHistory, currentPrice, coinName, timeperiod, id }) => {
+const LineChart = ({
+  coinHistory,
+  currentPrice,
+  coinName,
+  id,
+  days,
+  setDays,
+}) => {
   const { data: chartData } = useGetChartDataQuery({
     id,
-    timeperiod,
+    days,
   });
 
-//   const { day, week, year, detail } = dataTime;
-
-//   const determineTimeFormat = () => {
-//     switch (timeperiod) {
-//       case "24h":
-//         return day;
-//       case "7d":
-//         return week;
-//       case "1y":
-//         return year;
-//       default:
-//         return day;
-//     }
-//   };
-
-  const chartAxis = chartData?.prices.map((value) => ({
-    x: value[0], //date
-    y: value[1].toFixed(2), //price
-  }));
-
-  const labels = chartAxis?.map((value) =>
-    moment(value.x).format("YYYY-MM-DD HH:mm")
-  );
+  const labels = chartData?.prices.map((coin) => {
+    let date = new Date(coin[0]);
+    let time =
+      date.getHours() > 12
+        ? `${date.getHours() - 12}:${date.getMinutes()} PM`
+        : `${date.getHours()}:${date.getMinutes()} AM`;
+    return days === 1 ? time : date.toLocaleDateString();
+  });
 
   const options = {
     responsive: true,
     plugins: {
-      legend: {
-        position: "top",
-      },
-      title: {
-        display: true,
+      legend: false,
+	  subtitle: {
+        display: false,
         text: "Chart.js Line Chart",
+      },
+    },
+    elements: {
+      point: {
+        radius: 1,
       },
     },
   };
@@ -77,27 +73,61 @@ const LineChart = ({ coinHistory, currentPrice, coinName, timeperiod, id }) => {
       {
         fill: true,
         label: coinName,
-        data: chartAxis?.map((val) => val.y),
-        borderColor: "rgb(53, 162, 50)",
-        backgroundColor: "rgb(53, 50, 235)",
+        data: chartData?.prices.map((coin) => coin[1]),
+        borderColor: "hsl(308, 69%, 54%)",
+        backgroundColor: "#7a77ff",
       },
     ],
   };
+
+  //   console.log(value)
   return (
     <>
       <Row className="chart-header">
         <Title level={2} className="chart-title">
-          {coinName} 24h Price Chart
+          {coinName} Price Chart
         </Title>
         <Col className="price-container">
           <Title level={5} className="price-change">
             {coinHistory?.data?.change}%
           </Title>
           <Title level={5} className="current-price">
-            {coinName} Price: ${currentPrice}
+            {coinName} Price: ${" "}
+            {millify(currentPrice, {
+              precision: 4,
+              decimalSeparator: ",",
+            })}
           </Title>
         </Col>
       </Row>
+      {/* <Select
+        defaultValue="24H"//?
+        className="select-days"
+        placeholder="Select Timeperiod"
+        onChange={handleChangeChartDays}
+      >
+        {timePeriod.map((day, index) => (
+          <Option key={index} value={day.value}>
+            {day.label}
+          </Option>
+        ))}
+		 
+      </Select> */}
+      <div className="time-period">
+        {timePeriod.map((day) => (
+          <Button
+            type="primary"
+			className="time-buttons"
+            key={day.value}
+            onClick={() => {
+              setDays(day.value);
+            }}
+            selected={day.value === days}
+          >
+            {day.label}
+          </Button>
+        ))}
+      </div>
       <Line options={options} data={data} />
     </>
   );

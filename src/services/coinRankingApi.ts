@@ -25,10 +25,10 @@ export const coinRankingApi = createApi({
       query: (coinId) => createRequest(`/coin/${coinId}`),
     }),
 
-    // Note: Change the coin price history endpoint from this - `coin/${coinId}/history/${timeperiod} to this - `coin/${coinId}/history?timeperiod=${timeperiod}`
+    // Note: Change the coin price history endpoint from this - `coin/${coinId}/history/${days} to this - `coin/${coinId}/history?days=${days}`
     getCryptoHistory: builder.query({
-      query: ({ coinId, timeperiod }) =>
-        createRequest(`/coin/${coinId}/history?timeperiod=${timeperiod}`),
+      query: ({ coinId, days }) =>
+        createRequest(`/coin/${coinId}/history?days=${days}`),
     }),
 
     // Note: To access this endpoint you need premium plan

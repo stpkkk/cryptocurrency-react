@@ -2,17 +2,16 @@
 import React, { useState, useEffect } from "react";
 import millify from "millify";
 import { Link } from "react-router-dom";
-import { Card, Row, Col, Input } from "antd";
+import { Card, Row, Col, Input, Table } from "antd";
 import { useGetCryptosQuery } from "../services/coinRankingApi";
 import Loader from "../components/Loader";
+import { columns, data } from "../data/coinsTableData";
 
 const Cryptocurrencies = ({ simplified }) => {
   const count = simplified ? 10 : 100;
   const { data: cryptosList, isFetching } = useGetCryptosQuery(count);
   const [cryptos, setCryptos] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-
-
 
   useEffect(() => {
     setCryptos(cryptosList?.data?.coins);
@@ -25,9 +24,10 @@ const Cryptocurrencies = ({ simplified }) => {
   }, [cryptosList, searchTerm]);
 
   if (isFetching) return <Loader />;
-  
+
   return (
     <>
+      <Table columns={columns} dataSource={data} />
       {!simplified && (
         <div className="search-crypto">
           <Input
