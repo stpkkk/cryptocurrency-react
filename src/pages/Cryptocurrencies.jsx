@@ -12,7 +12,7 @@ const Cryptocurrencies = ({ simplified }) => {
   const [cryptos, setCryptos] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  //   console.log(cryptos);
+
 
   useEffect(() => {
     setCryptos(cryptosList?.data?.coins);
@@ -25,7 +25,7 @@ const Cryptocurrencies = ({ simplified }) => {
   }, [cryptosList, searchTerm]);
 
   if (isFetching) return <Loader />;
-
+  
   return (
     <>
       {!simplified && (
@@ -46,7 +46,10 @@ const Cryptocurrencies = ({ simplified }) => {
             key={currency.uuid} //id in api data
           >
             {/* Note: Change currency.id to currency.uuid  */}
-            <Link key={currency.uuid} to={`/crypto/${currency.uuid}`}>
+            <Link
+              key={currency.uuid}
+              to={`/crypto/${currency.uuid}/${currency.name.toLowerCase()}`}
+            >
               <Card
                 title={`${currency.rank}. ${currency.name}`}
                 extra={

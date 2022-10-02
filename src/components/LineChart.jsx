@@ -1,68 +1,88 @@
 import React from "react";
-import { Line } from "react-chartjs-2";
+
 import { Col, Row, Typography } from "antd";
+import { useGetChartDataQuery } from "../services/coingeckoApi";
+
 import {
   Chart as ChartJS,
-  CategoryScale,
   LinearScale,
+  CategoryScale,
+  BarElement,
   PointElement,
   LineElement,
-  Tooltip,
   Legend,
+  Tooltip,
 } from "chart.js";
+import { Line } from "react-chartjs-2";
+import moment from "moment";
 
 ChartJS.register(
-  CategoryScale,
   LinearScale,
+  CategoryScale,
+  BarElement,
   PointElement,
   LineElement,
-  Tooltip,
-  Legend
+  Legend,
+  Tooltip
 );
 
 const { Title } = Typography;
 
-const LineChart = ({ coinHistory, currentPrice, coinName }) => {
-  const coinPrice = [];
-  const coinTimestamp = [];
+const LineChart = ({ coinHistory, currentPrice, coinName, timeperiod, id }) => {
+  const { data: chartData } = useGetChartDataQuery({
+    id,
+    timeperiod,
+  });
 
-  for (let i = 0; i < coinHistory?.data?.history?.length; i += 1) {
-    coinPrice.push(coinHistory?.data?.history[i].price);
-  }
+//   const { day, week, year, detail } = dataTime;
 
-  for (let i = 0; i < coinHistory?.data?.history?.length; i += 1) {
-    coinTimestamp.push(
-      new Date(coinHistory?.data?.history[i].timestamp).toLocaleDateString()
-    );
-  }
-  // for (let i = 0; i < coinHistory?.data?.history?.length; i += 1) {
-  //   coinPrice.push(coinHistory?.data?.history[i].price);
-  //   coinTimestamp.push(
-  // 	new Date(
-  // 	  coinHistory?.data?.history[i].timestamp * 1000
-  // 	).toLocaleTimeString()
-  //   );
-  // }
+//   const determineTimeFormat = () => {
+//     switch (timeperiod) {
+//       case "24h":
+//         return day;
+//       case "7d":
+//         return week;
+//       case "1y":
+//         return year;
+//       default:
+//         return day;
+//     }
+//   };
+
+  const chartAxis = chartData?.prices.map((value) => ({
+    x: value[0], //date
+    y: value[1].toFixed(2), //price
+  }));
+
+  const labels = chartAxis?.map((value) =>
+    moment(value.x).format("YYYY-MM-DD HH:mm")
+  );
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: true,
+        text: "Chart.js Line Chart",
+      },
+    },
+  };
 
   const data = {
-    // X-Axis
-    labels: coinTimestamp,
-    // Y-Axis
+    labels,
     datasets: [
       {
-        label: `Price in USD ($)`,
-        data: coinPrice,
-        fill: false,
-        backgroundColor: "#0071bd",
-        borderColor: "#0071bd",
+        fill: true,
+        label: coinName,
+        data: chartAxis?.map((val) => val.y),
+        borderColor: "rgb(53, 162, 50)",
+        backgroundColor: "rgb(53, 50, 235)",
       },
     ],
   };
-
-  const options = { scales: { y: { ticks: { beginAtZero: true } } } };
-
-//   console.log(coinHistory);
-
   return (
     <>
       <Row className="chart-header">
@@ -78,7 +98,7 @@ const LineChart = ({ coinHistory, currentPrice, coinName }) => {
           </Title>
         </Col>
       </Row>
-      <Line data={data} options={options} />
+      <Line options={options} data={data} />
     </>
   );
 };

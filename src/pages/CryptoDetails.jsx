@@ -26,6 +26,7 @@ const { Title, Text } = Typography;
 const { Option } = Select;
 
 const CryptoDetails = () => {
+  const { id } = useParams();
   const { coinId } = useParams();
   const [timeperiod, setTimeperiod] = useState("7d");
   const { data, isFetching } = useGetCryptoDetailsQuery(coinId);
@@ -37,7 +38,10 @@ const CryptoDetails = () => {
 
   if (isFetching) return <Loader />;
 
-  const time = ["3h", "24h", "7d", "30d", "1y", "3m", "3y", "5y"];
+  const time = ["24h", "7d", "1y"];
+  // const time = ["3h", "24h", "7d", "30d", "1y", "3m", "3y", "5y"];
+
+  
 
   const stats = [
     {
@@ -105,11 +109,9 @@ const CryptoDetails = () => {
     },
   ];
 
-    // console.log(data);
-
   return (
     <Col className="coin-detail-container">
-      <Col className="coin-heading-container">
+      {/* <Col className="coin-heading-container">
         <Title level={2} className="coin-name">
           {data?.data?.coin.name} ({data?.data?.coin.symbol}) Price
         </Title>
@@ -117,7 +119,7 @@ const CryptoDetails = () => {
           {cryptoDetails.name} live price in US Dollar (USD). View value
           statistics, market cap and supply.
         </p>
-      </Col>
+      </Col> */}
       <Select
         defaultValue="7d"
         className="select-timeperiod"
@@ -130,8 +132,10 @@ const CryptoDetails = () => {
       </Select>
       <LineChart
         coinHistory={coinHistory}
-        currentPrice={millify(cryptoDetails?.price)}
+        currentPrice={cryptoDetails?.price} //TODO milify
         coinName={cryptoDetails?.name}
+        timeperiod={timeperiod}
+        id={id}
       />
       <Col className="stats-container">
         <Col className="coin-value-statistics">

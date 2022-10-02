@@ -15,7 +15,6 @@ const Homepage = () => {
 
   if (isFetching) return <Loader/>
 
-//   console.log(data);
   return (
     <>
       <div align="middle">
@@ -26,7 +25,10 @@ const Homepage = () => {
           <Col span={12} align="middle">
             <Statistic
               title="Total Coins:"
-              value={millify(globalStats.total)}
+              value={millify(globalStats.total, {
+				precision: 3,
+				decimalSeparator: ",",
+			  } )}
             />
           </Col>
           <Col span={12} align="middle">
@@ -50,7 +52,7 @@ const Homepage = () => {
           <Col span={12} align="middle">
             <Statistic
               title="Total Markets:"
-              value={millify(globalStats.totalMarkets)}
+              value={globalStats.totalMarkets}
             />
           </Col>
         </Row>
