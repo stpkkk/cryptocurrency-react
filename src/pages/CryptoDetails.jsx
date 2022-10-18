@@ -105,7 +105,6 @@ const CryptoDetails = () => {
     },
   ];
 
-  console.log(cryptoDetails?.iconUrl);
   return (
     <Col className="coin-detail-container">
       <Col className="coin-heading-container">

@@ -9,9 +9,14 @@ export const coingeckoApi = createApi({
   reducerPath: "coingeckoApi",
   baseQuery: fetchBaseQuery({ baseUrl }),
   endpoints: (builder) => ({
-    // getCryptos: builder.query({
-    //   query: (count) => `/coins?limit=${count}`,
-    // }),
+    getCryptos: builder.query({
+      query: (count) => `/coins?limit=${count}`,
+    }),
+
+	getCryptoDetails: builder.query({
+		query: (coinId) => `/coin/${coinId}`,
+	  }),
+  
 
     // getGlobalStats: builder.query({
     //   query: () => `/global`,
@@ -24,4 +29,4 @@ export const coingeckoApi = createApi({
   }),
 });
 
-export const { useGetChartDataQuery } = coingeckoApi;
+  export const { useGetChartDataQuery, useGetCryptosQuery,useGetCryptoDetailsQuery  } = coingeckoApi;

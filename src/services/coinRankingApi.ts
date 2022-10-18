@@ -9,7 +9,6 @@ const cryptoApiHeaders = {
 }; //Headers это методанные API
 
 const baseUrl = "https://coinranking1.p.rapidapi.com";
-// const baseUrl = "https://coinranking1.p.rapidapi.com";
 
 const createRequest = (url: string) => ({ url, headers: cryptoApiHeaders });
 
