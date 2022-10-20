@@ -45,11 +45,13 @@
 <h2>Libraries were used</h2>
 <p>axios - HTTP-client</p>
 <p>sass - CSS preprocessor</p>
-<p>Bootstrap - CSS framework</p>
- <p>Hightcharts - charts</p>
+<p>Ant-Design - CSS framework</p>
+ <p>Chart.js - charts</p>
  <p>react-icons</p>
  <p>react-redux - state manager</p>
  <p>react-router-dom - declarative routing for React</p>
+ <p>millify - converts long numbers into pretty, human-readable strings</p>
+ <p>moment - for parsing, validating, manipulating, and formatting dates</p> 
 </div>
 <div>
 <h2>Frontend-developer test task for "Natlex" company</h2>
@@ -57,7 +59,7 @@
 
 <div >
 <p>Prewie:</p>
-<img src="https://github.com/stpkkk/Dashboard-React/blob/master/Prewie.png" alt="test">
+<img src="https://github.com/stpkkk/cryptocurrency-react/blob/master/cryptovalery-prewie.png" alt="test">
 </div>
 <div >
 
