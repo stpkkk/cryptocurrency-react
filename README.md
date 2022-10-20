@@ -42,6 +42,8 @@
 <h2>About</h2>
 </summary>
 <div>
+ <p>Cryptovalery - most-referenced price-tracking website for cryptoassets in the rapidly growing cryptocurrency space</p>
+ <p>App developed with using coingeckoApi(https://www.coingecko.com/ru/api/documentation), coinRankingApi (https://rapidapi.com/Coinranking/api/coinranking1/) and bingNewsApi(https://rapidapi.com/microsoft-azure-org-microsoft-cognitive-services/api/bing-news-search1/)</p>
 <h2>Libraries were used</h2>
 <p>axios - HTTP-client</p>
 <p>sass - CSS preprocessor</p>
