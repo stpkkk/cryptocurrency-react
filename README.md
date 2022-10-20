@@ -1,6 +1,6 @@
 <div stl></div>
 <h2>Deploy: 
- https://dashboard-bystpkkk.netlify.app/
+ https://cryptovalery.netlify.app/
 </h2>
 <details>
 <summary>
@@ -60,7 +60,4 @@
 <img src="https://github.com/stpkkk/Dashboard-React/blob/master/Prewie.png" alt="test">
 </div>
 <div >
-<p>Test:</p>
-<img src="https://github.com/stpkkk/Dashboard-React/blob/master/test-Natlex.png" alt="test">
-</div>
-</details>
+
