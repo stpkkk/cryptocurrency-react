@@ -54,7 +54,7 @@
  <p>moment - for parsing, validating, manipulating, and formatting dates</p> 
 </div>
 <div>
-<h2>Frontend-developer test task for "Natlex" company</h2>
+
 </div>
 
 <div >
