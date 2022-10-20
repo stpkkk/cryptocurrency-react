@@ -129,7 +129,7 @@ const Cryptocurrencies = () => {
       ),
 	  
 
-      name: <Link to={`/crypto/${coin.id}/${coin.name.toLowerCase()}`}>{`${coin.name}`}</Link>,
+      name: <Link to={`/crypto/${coin.uuid}/${coin.name.toLowerCase()}`}>{`${coin.name}`}</Link>,
       price: coin.market_data.current_price.usd,
       one_hour: coin.market_data.price_change_percentage_1h_in_currency.usd,
       day: coin.market_data.price_change_percentage_24h_in_currency.usd,

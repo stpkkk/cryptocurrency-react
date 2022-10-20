@@ -36,7 +36,7 @@ const CryptoDetails = () => {
     days,
   });
   const cryptoDetails = data?.data?.coin;
-
+  console.log(cryptoDetails);
   if (isFetching) return <Loader />;
 
   const stats = [
