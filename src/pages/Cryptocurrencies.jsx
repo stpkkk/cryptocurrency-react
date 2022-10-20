@@ -58,7 +58,7 @@ const Cryptocurrencies = () => {
       key: "name",
       width: "20%",
       ellipsis: true,
-    
+
       sorter: (a, b) => a.name.localeCompare(b.name),
       sortOrder: sortedInfo.columnKey === "name" ? sortedInfo.order : null,
     },
@@ -119,7 +119,7 @@ const Cryptocurrencies = () => {
     return {
       key: id,
       id: id,
-    //   id: id + 1,
+      //   id: id + 1,
       image: (
         <img
           src={`${coin.image.small}`}
@@ -127,9 +127,12 @@ const Cryptocurrencies = () => {
           style={{ height: "25px" }}
         />
       ),
-	  
 
-      name: <Link to={`/crypto/${coin.uuid}/${coin.name.toLowerCase()}`}>{`${coin.name}`}</Link>,
+      name: (
+        <Link
+          to={`/crypto/${coin.uuid}/${coin.name.toLowerCase()}`}
+        >{`${coin.name}`}</Link>
+      ),
       price: coin.market_data.current_price.usd,
       one_hour: coin.market_data.price_change_percentage_1h_in_currency.usd,
       day: coin.market_data.price_change_percentage_24h_in_currency.usd,
@@ -153,7 +156,6 @@ const Cryptocurrencies = () => {
 
   return (
     <>
-	
       <Input
         placeholder="Search Cryptocurrency"
         onChange={(e) => setSearchTerm(e.target.value.toLowerCase())}
