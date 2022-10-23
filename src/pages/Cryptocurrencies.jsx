@@ -4,13 +4,16 @@ import { Link } from "react-router-dom";
 
 import { Input, Table, Button } from "antd";
 
-import { useGetCryptosQuery } from "../services/coingeckoApi";
+import { useGetCryptosCoingeckoApiQuery } from "../services/coingeckoApi";
+import { useGetCryptosQuery } from "../services/coinRankingApi";
 
 import Loader from "../components/Loader";
 
-const Cryptocurrencies = () => {
-  const { data: cryptosList, isFetching } = useGetCryptosQuery();
+const Cryptocurrencies = async () => {
+  const { data: cryptosList, isFetching } = useGetCryptosCoingeckoApiQuery();
+  const { data: cryptosListCoinRanking } = useGetCryptosQuery();
   const [cryptos, setCryptos] = useState([]);
+  const [coinRankingCryptos, setCoinRankingCryptos] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
   const [sortedInfo, setSortedInfo] = useState({});
@@ -20,6 +23,7 @@ const Cryptocurrencies = () => {
       pageSize: 100,
     },
   });
+
   const handleChange = (pagination, filters, sorter) => {
     setSortedInfo(sorter);
     setTableParams({
@@ -32,7 +36,6 @@ const Cryptocurrencies = () => {
   const clearSorters = () => {
     setSortedInfo({});
   };
-  //   console.log(cryptos?.[0].name);
 
   const columns = [
     {
@@ -58,6 +61,16 @@ const Cryptocurrencies = () => {
       key: "name",
       width: "20%",
       ellipsis: true,
+      //   render:  () => cryptosListCoinRanking?.data?.coins.map((item) => {
+      //     return (
+      //       <Link
+      //         key={item.uuid}
+      //         to={`/crypto/${item.uuid}/${item.name.toLowerCase()}`}
+      //       >
+      //         {item.name[0]}
+      //       </Link>
+      //     );
+      //   }),
 
       sorter: (a, b) => a.name.localeCompare(b.name),
       sortOrder: sortedInfo.columnKey === "name" ? sortedInfo.order : null,
@@ -114,8 +127,22 @@ const Cryptocurrencies = () => {
         sortedInfo.columnKey === "market_cap" ? sortedInfo.order : null,
     },
   ];
+  let newData1 = Object.values(cryptosListCoinRanking?.data?.coins);
+  let newData2 = Object.values(cryptos);
+  let [newData3, newData4] = await Promise.all([newData1, newData2]);
 
-  const data = cryptos?.map((coin, id) => {
+  let apiCombined = [...newData3, ...newData4];
+
+  console.log(apiCombined);
+
+  //!delete slice method to show all coins
+  const data = apiCombined?.slice(0, 3).map((coin, id) => {
+    // console.log("coin", coin);
+    // console.log(
+    //   "cryptosListCoinRanking uuid",
+    //   cryptosListCoinRanking?.data.coins[0].uuid
+    // );
+
     return {
       key: id,
       id: id,
@@ -129,9 +156,9 @@ const Cryptocurrencies = () => {
       ),
 
       name: (
-        <Link
-          to={`/crypto/${coin.uuid}/${coin.name.toLowerCase()}`}
-        >{`${coin.name}`}</Link>
+        <Link to={`/crypto/${coin.uuid}/${coin.name.toLowerCase()}`}>
+          {coin.name}
+        </Link>
       ),
       price: coin.market_data.current_price.usd,
       one_hour: coin.market_data.price_change_percentage_1h_in_currency.usd,
