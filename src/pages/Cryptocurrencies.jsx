@@ -9,7 +9,7 @@ import { useGetCryptosQuery } from "../services/coinRankingApi";
 
 import Loader from "../components/Loader";
 
-const Cryptocurrencies = async () => {
+const Cryptocurrencies = () => {
   const { data: cryptosList, isFetching } = useGetCryptosCoingeckoApiQuery();
   const { data: cryptosListCoinRanking } = useGetCryptosQuery();
   const [cryptos, setCryptos] = useState([]);
@@ -127,16 +127,24 @@ const Cryptocurrencies = async () => {
         sortedInfo.columnKey === "market_cap" ? sortedInfo.order : null,
     },
   ];
-  let newData1 = Object.values(cryptosListCoinRanking?.data?.coins);
-  let newData2 = Object.values(cryptos);
-  let [newData3, newData4] = await Promise.all([newData1, newData2]);
 
-  let apiCombined = [...newData3, ...newData4];
+//   let apiCombined = [...cryptos, ...cryptosListCoinRanking?.data?.coins];
 
-  console.log(apiCombined);
+// let arr3 = cryptos?.map((item, i) => Object.assign({}, item, cryptosListCoinRanking?.data?.coins[i]))// как варик https://stackoverflow.com/questions/46849286/merge-two-array-of-objects-based-on-a-key
+
+let arr3 = [];
+
+for(let i=0; i<cryptos?.length; i++) {
+	arr3.push({
+   ...cryptos[i], 
+   ...(cryptosListCoinRanking?.data?.coins.find((itmInner) => itmInner.name === cryptos[i].name))}
+  );
+}
+
+  console.log(arr3);
 
   //!delete slice method to show all coins
-  const data = apiCombined?.slice(0, 3).map((coin, id) => {
+  const data = arr3.slice(0, 3).map((coin, id) => {
     // console.log("coin", coin);
     // console.log(
     //   "cryptosListCoinRanking uuid",
