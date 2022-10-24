@@ -1,3 +1,5 @@
+
+
 //TODO https://youtu.be/QA6oTpMZp84?t=5669 USE EFFECT !!
 
 import React, { useState } from "react";
@@ -36,8 +38,8 @@ const CryptoDetails = () => {
     days,
   });
   const cryptoDetails = data?.data?.coin;
-  if (isFetching) return <Loader />;
 
+  if (isFetching) return <Loader />;
 
   const stats = [
     {
@@ -129,7 +131,7 @@ const CryptoDetails = () => {
         <Col className="coin-value-statistics">
           <Col className="coin-value-statistics-heading">
             <Title level={3} className="coin-details-heading">
-              {/* {cryptoDetails.name} Value Statistics */}
+              {cryptoDetails.name} Value Statistics
             </Title>
             <p>
               An overview showing the statistics of {cryptoDetails.name}, such
@@ -195,3 +197,4 @@ const CryptoDetails = () => {
 };
 
 export default CryptoDetails;
+

@@ -29,7 +29,7 @@ export const coingeckoApi = createApi({
 });
 
 export const {
-//   useGetChartDataQuery,
-useGetCryptosCoingeckoApiQuery,
+  useGetChartDataQuery,
+  useGetCryptosCoingeckoApiQuery,
   useGetCryptoDetailsQuery,
 } = coingeckoApi;

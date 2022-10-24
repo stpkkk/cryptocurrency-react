@@ -16,19 +16,19 @@ export const coinRankingApi = createApi({
   reducerPath: "cryptoApi",
   baseQuery: fetchBaseQuery({ baseUrl }),
   endpoints: (builder) => ({
-	getCryptos: builder.query({
-		query: () => createRequest(`/coins`),
-	  }),
+    getCryptos: builder.query({
+      query: () => createRequest(`/coins`),
+    }),
 
     getCryptoDetails: builder.query({
       query: (coinId) => createRequest(`/coin/${coinId}`),
     }),
 
     // Note: Change the coin price history endpoint from this - `coin/${coinId}/history/${days} to this - `coin/${coinId}/history?days=${days}`
-    // getCryptoHistory: builder.query({
-    //   query: ({ name, days }) =>
-    //     createRequest(`/coin/${name}/history?days=${days}`),
-    // }),
+    getCryptoHistory: builder.query({
+      query: ({ coinId, days }) =>
+        createRequest(`/coin/${coinId}/history?days=${days}`),
+    }),
 
     // Note: To access this endpoint you need premium plan
     // getExchanges: builder.query({
@@ -41,5 +41,5 @@ export const {
   useGetCryptosQuery,
   useGetCryptoDetailsQuery,
   //   useGetExchangesQuery,
-//   useGetCryptoHistoryQuery,
+  useGetCryptoHistoryQuery,
 } = coinRankingApi;

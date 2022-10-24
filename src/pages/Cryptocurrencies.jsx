@@ -2,18 +2,17 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 // import millify from "millify";
 
-import { Input, Table, Button } from "antd";
+import { Input, Table, Space } from "antd";
 
 import { useGetCryptosCoingeckoApiQuery } from "../services/coingeckoApi";
 import { useGetCryptosQuery } from "../services/coinRankingApi";
 
 import Loader from "../components/Loader";
 
-const Cryptocurrencies = () => {
+const Cryptocurrencies = ({ simplified }) => {
   const { data: cryptosList, isFetching } = useGetCryptosCoingeckoApiQuery();
   const { data: cryptosListCoinRanking } = useGetCryptosQuery();
   const [cryptos, setCryptos] = useState([]);
-  const [coinRankingCryptos, setCoinRankingCryptos] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
   const [sortedInfo, setSortedInfo] = useState({});
@@ -31,10 +30,6 @@ const Cryptocurrencies = () => {
       filters,
       ...sorter,
     });
-  };
-
-  const clearSorters = () => {
-    setSortedInfo({});
   };
 
   const columns = [
@@ -128,39 +123,28 @@ const Cryptocurrencies = () => {
     },
   ];
 
-//   let apiCombined = [...cryptos, ...cryptosListCoinRanking?.data?.coins];
+  // Merge 2 API`s array to get uuid from coinranking and cryptoList from coingecko in 1 array
+  let arr3 = [];
 
-// let arr3 = cryptos?.map((item, i) => Object.assign({}, item, cryptosListCoinRanking?.data?.coins[i]))// как варик https://stackoverflow.com/questions/46849286/merge-two-array-of-objects-based-on-a-key
+  for (let i = 0; i < cryptos?.length; i++) {
+    arr3.push({
+      ...cryptos[i],
+      ...cryptosListCoinRanking?.data?.coins.find(
+        (itmInner) => itmInner.name === cryptos[i].name
+      ),
+    });
+  }
 
-let arr3 = [];
-
-for(let i=0; i<cryptos?.length; i++) {
-	arr3.push({
-   ...cryptos[i], 
-   ...(cryptosListCoinRanking?.data?.coins.find((itmInner) => itmInner.name === cryptos[i].name))}
-  );
-}
-
-  console.log(arr3);
-
-  //!delete slice method to show all coins
-  const data = arr3.slice(0, 3).map((coin, id) => {
-    // console.log("coin", coin);
-    // console.log(
-    //   "cryptosListCoinRanking uuid",
-    //   cryptosListCoinRanking?.data.coins[0].uuid
-    // );
-
+  const data = arr3.map((coin, id) => {
     return {
       key: id,
-      id: id,
-      //   id: id + 1,
+      id: id + 1,
       image: (
-        <img
+        <Link to={`/crypto/${coin.uuid}/${coin.name.toLowerCase()}`}><img
           src={`${coin.image.small}`}
           alt={`${coin.image.small}`}
           style={{ height: "25px" }}
-        />
+        /></Link>
       ),
 
       name: (
@@ -178,26 +162,31 @@ for(let i=0; i<cryptos?.length; i++) {
 
   useEffect(() => {
     setCryptos(cryptosList);
-
     const filteredData = cryptosList?.filter((coin) =>
       coin.name.toLowerCase().includes(searchTerm)
     );
-
     setCryptos(filteredData);
   }, [cryptosList, searchTerm]);
 
   if (isFetching) return <Loader />;
-  // console.log(cryptos);
 
   return (
     <>
-      <Input
-        placeholder="Search Cryptocurrency"
-        onChange={(e) => setSearchTerm(e.target.value.toLowerCase())}
-        style={{ width: 400 }}
-      />
-
-      <Button onClick={clearSorters}>Clear sorters</Button>
+	{!simplified && (
+      <Space
+        align="center"
+		direction="vertical"
+        style={{
+          display: "flex",
+        }}
+      >
+        <Input
+          placeholder="Search Cryptocurrency"
+          onChange={(e) => setSearchTerm(e.target.value.toLowerCase())}
+          style={{ width: 400 }}
+        />
+      </Space>
+	     )}
       <Table
         pagination={tableParams.pagination}
         columns={columns}
